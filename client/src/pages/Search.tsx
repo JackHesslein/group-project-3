@@ -13,44 +13,41 @@ const Home: React.FC = () => {
     }
   }, [navigate]);
   const [searchInput, setSearchInput] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [results, setResults] = useState<any[]>([]);
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSearchQuery(searchInput);
-    const inputCity = (e.target as HTMLFormElement).city.value.trim();
-    if (inputCity) {
-      setCity(inputCity);
+
+    const inputPark = (e.target as HTMLFormElement).park.value.trim();
+    if (inputPark) {
+      //add in API call to back end data (api object), return an object with park name, location, and frog species
+      setResults([1, 2, 3, 4, 5]);
     }
   };
+
+
   return (
     <div>
-      <h1 className= 'Todays Weather'> </h1>
+      <h1 className= 'Frog Finderz'> </h1>
       <form onSubmit={handleSearch} className="mb-6 flex">
         <input
           type="text"
-          name="city"
+          name="park"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          placeholder="Enter city..."
+          placeholder="Enter park name..."
         />
         <button type="submit"
         className="p-2 bg-blue-700 rounded-r-lg hover:bg-blue-800"
         >
         Search</button>
       </form>
-      <WeatherCard searchInput={searchQuery} main={{
-        temp: 0,
-        humidity: 0
-      }} sys={{
-        country: ''
-      }} weather={[]} wind={{
-        speed: 0
-      }} />
-      <NewsCard searchInput={searchQuery} />
+      {results.map((result) => (
+        <div>{result}</div>
+      ))} 
     </div>
   );
 };
-function setCity(_inputCity: any) {
+function setPark(_inputPark: any) {
     throw new Error('Function not implemented.');
 }
 export default Home;
