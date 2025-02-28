@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Park } from '../models/index.js';
-import { Model } from 'mongoose';
+
 
 // create __dirname if not exists
 const ___filename = fileURLToPath(import.meta.url);
@@ -15,16 +15,18 @@ fs.createReadStream(path.join(__dirname, '../../assets/Amphibians_on_NPS.csv'))
   .pipe(csv())
 //   @ts-ignore
   .on('data', (data) => results.push(data))
-  .on('end', () => {
+  .on('end', async () => {
     for (let i = 0; i < results.length; i++) {
     // Park_Name
     // Common names
-    const { Park_Name, Common_Names } = results[i];
+    const { Park_Name, Common_Names, Park_Code } = results[i];
 // check if park exists
- let park = Park.findOne({ name: Park_Name });
+ let park = await Park.findOne({ name: Park_Name });
+
 // if not, create park
 if (!park) {
-    park = Park.create ({ name: Park_Name });
+    park = await Park.create ({ name: Park_Name, code: Park_Code });
+
   };
 // check if species is in the park
 // if it is, skip it
