@@ -20,7 +20,7 @@ fs.createReadStream(path.join(__dirname, '../../assets/Amphibians_on_NPS.csv'))
     for (let i = 0; i < results.length; i++) {
     // Park_Name
     // Common names
-    const { Park_Name, Common_Names, Park_Code } = results[i];
+    const { Park_Name, Common_Names } = results[i];
 // check if park exists
  let park = await Park.findOne({ name: Park_Name.trim() });
 
