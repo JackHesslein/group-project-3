@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AccountCard from '../components/AccountCard';
 import '../components/Navbar';
 import '../components/Footer';
 
@@ -47,8 +46,6 @@ const Home: React.FC = () => {
     </div>
   );
 };
-function setPark(_inputPark: any) {
-    throw new Error('Function not implemented.');
-}
+
 export default Home;
 
