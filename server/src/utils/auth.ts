@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-export const authenticateToken = ({ req }: any) => {
+export const authenticateToken = async ({ req }: any) => {
   // Allows token to be sent via req.body, req.query, or headers
   let token = req.body.token || req.query.token || req.headers.authorization;
 
@@ -12,6 +12,7 @@ export const authenticateToken = ({ req }: any) => {
   if (req.headers.authorization) {
     token = token.split(' ').pop().trim();
   }
+
 
   // If no token is provided, return the request object as is
   if (!token) {
@@ -21,6 +22,7 @@ export const authenticateToken = ({ req }: any) => {
   // Try to verify the token
   try {
     const { data }: any = jwt.verify(token, process.env.JWT_SECRET_KEY || '', { maxAge: '2hr' });
+   
     // If the token is valid, attach the user data to the request object
     req.user = data;
   } catch (err) {

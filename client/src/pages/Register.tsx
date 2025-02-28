@@ -1,28 +1,36 @@
+import { useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registerUser } from '../utils/api';
-import '../styles/Register.css';
+import { REGISTER } from '../utils/mutations';
+
+
 const Register: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
+  const [registerUser] = useMutation(REGISTER);
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
     }
+
     try {
-      const response = await registerUser({ username, password });
+      const response = await registerUser({ variables: { input: {username, email, password} } });
       console.log('User registered:', response.data);
       alert('Registration successful!');
       navigate('/login'); // Redirect to login page
+
     } catch (error) {
       console.error('Error registering user:', error);
       alert('Registration failed. Please try again.');
     }
   };
+
   return (
     <div className="register pt-5 text-center">
       <h1 className='h1'>Register</h1>
@@ -35,6 +43,16 @@ const Register: React.FC = () => {
             id="register-username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className='d-flex flex-column text-center justify-content-center align-items-center'>
+          <label>Email</label>
+          <input
+            className='rounded-3 text-center'
+            type="email"
+            id="register-email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className='pt-4 d-flex flex-column text-center justify-content-center align-items-center'>

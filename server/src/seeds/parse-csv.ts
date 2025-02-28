@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Park } from '../models/index.js';
+import db from '../config/connection.js';
 
 
 // create __dirname if not exists
@@ -10,7 +11,7 @@ const ___filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(___filename);
 
 const results: any = [];
-
+await db();
 fs.createReadStream(path.join(__dirname, '../../assets/Amphibians_on_NPS.csv'))
   .pipe(csv())
 //   @ts-ignore
@@ -21,11 +22,11 @@ fs.createReadStream(path.join(__dirname, '../../assets/Amphibians_on_NPS.csv'))
     // Common names
     const { Park_Name, Common_Names, Park_Code } = results[i];
 // check if park exists
- let park = await Park.findOne({ name: Park_Name });
+ let park = await Park.findOne({ name: Park_Name.trim() });
 
 // if not, create park
 if (!park) {
-    park = await Park.create ({ name: Park_Name, code: Park_Code });
+    park = await Park.create ({ name: Park_Name, code: Park_Name });
 
   };
 // check if species is in the park

@@ -21,7 +21,6 @@ const parkSchema = new Schema<IPark>(
     code: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
   },

@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../utils/api';
-import '../styles/Login.css';
+import { LOGIN } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
+
+
 const Login: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useNavigate();
+  const [login] = useMutation(LOGIN);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await loginUser({ username, password });
+      const { data } = await login({ variables: {email, password} });
+      console.log(data);
+      const { token } = data.login;
       //console.log('Login response:', response); // Log the response
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('token', token);
       history('/');
     } catch (error) {
       console.error('Login failed:', error);
@@ -23,13 +29,13 @@ const Login: React.FC = () => {
       <h1 className='loginh1'>Login</h1>
       <form className="login-form pt-5 text-center" onSubmit={handleLogin}>
         <div className='d-flex flex-column text-center justify-content-center align-items-center'>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="username">Email:</label>
           <input
             className='rounded-3 text-center'
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>

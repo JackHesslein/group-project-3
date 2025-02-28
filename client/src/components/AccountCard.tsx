@@ -1,12 +1,14 @@
-const AccountCard = () => {
+interface AccountProps {
+  username: string;
+  email: string;
+}
 
-  const username: string = '';
-  const email: string = '';
+const AccountCard = (props: AccountProps) => {
   return (
     <main>
       <div className="AC">
-        <h1>{username}</h1>
-        <h2>{email}</h2>
+        <h1>{props.username}</h1>
+        <h2>{props.email}</h2>
       </div>
     </main>
   );
