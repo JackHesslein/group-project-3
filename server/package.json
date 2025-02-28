@@ -7,7 +7,8 @@
     "scripts": {
         "start": "npm run build && node dist/server.js --ignore client",
         "build": "tsc",
-        "dev": "nodemon src/server.ts"
+        "dev": "node dist/server.js",
+        "seed": "node dist/seeds/parse-csv.js"
     },
     "dependencies": {
         "@apollo/server": "^4.11.3",
