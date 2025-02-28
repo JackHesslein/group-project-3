@@ -1,18 +1,44 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import express from 'express';
-import routes from './routes/index.js';
-import sequelize from './config/connection.js';
-const app = express();
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
+import path from 'path';
+
+import { typeDefs, resolvers } from './schemas/index.js';
+import db from './config/connection.js';
+
 const PORT = process.env.PORT || 3001;
-// Serves static files in the entire client's dist folder
-app.use(express.static('../client/dist'));
-app.use(express.json());
-app.use(routes);
-// Syncs the database and starts the server. Force is set to false to prevent the database from being overwritten
-sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => {
-    console.log('Database synced');
-    console.log(`Server is listening on port ${PORT}`);
-  });
+const app = express();
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
 });
+
+const startApolloServer = async () => {
+  await server.start();
+  
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
+  
+  app.use('/graphql', expressMiddleware(server));
+
+  // if we're in production, serve client/dist as static assets
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../../client/dist')));
+
+    app.get('*', (_req, res) => {
+      res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+    });
+  }
+  
+  try {
+    await db();
+    app.listen(PORT, () => {
+      console.log(`API server running on port ${PORT}!`);
+      console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+    });
+  } catch (error) {
+    console.error('MongoDB connection error:', error);
+  }
+};
+
+startApolloServer();
