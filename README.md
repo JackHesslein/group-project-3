@@ -38,3 +38,8 @@ Responsive design
 
 # Installation
 npm i
+
+## Usage
+- Open your browser and navigate to `http://localhost:3000`
+- Register a new account or log in with an existing account
+- Use the search bar on the home page to fetch park and species data
