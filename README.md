@@ -13,12 +13,13 @@ Responsive design
 # Tech Stack
 
 ## Frontend
--React
--CSS
--Html
--Apollo
--Graphql
--JWT-Decode
+
+- React
+- CSS
+- Html
+- Apollo
+- Graphql
+- JWT-Decode
 
 ## Backend
 -Typescript
