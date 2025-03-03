@@ -13,14 +13,26 @@ Responsive design
 # Tech Stack
 
 ## Frontend
-
-
+React
+CSS
+Html
+Apollo
+Graphql
+JWT-Decode
 
 ## Backend
+Typescript
+Javascript
+Apollo
+Bcrypt
+Concurrently
+CSV-Parser
+Dotenv
+Express
+Graphql
+Jsonwebtoken
+Mongodb
+Mongoose
 
 # Installation
-
-
-# Usage
-
-# License
+npm i
