@@ -13,26 +13,26 @@ Responsive design
 # Tech Stack
 
 ## Frontend
-React
-CSS
-Html
-Apollo
-Graphql
-JWT-Decode
+-React
+-CSS
+-Html
+-Apollo
+-Graphql
+-JWT-Decode
 
 ## Backend
-Typescript
-Javascript
-Apollo
-Bcrypt
-Concurrently
-CSV-Parser
-Dotenv
-Express
-Graphql
-Jsonwebtoken
-Mongodb
-Mongoose
+-Typescript
+-Javascript
+-Apollo
+-Bcrypt
+-Concurrently
+-CSV-Parser
+-Dotenv
+-Express
+-Graphql
+-Jsonwebtoken
+-Mongodb
+-Mongoose
 
 # Installation
 npm i
