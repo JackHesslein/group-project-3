@@ -11,5 +11,6 @@ export const SEARCH = gql `query GetParksByName($name: String!) {
     getParksByName(name: $name) {
       _id
       name
+      species
     }
   }`;
